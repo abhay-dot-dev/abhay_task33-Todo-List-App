@@ -1,4 +1,5 @@
 import dotenv from 'dotenv'
+import cors from 'cors'
 import express from 'express'
 import { connectDB } from './config/db.js';
 import todoRoutes from './routes/todoRoutes.js'
@@ -11,6 +12,7 @@ const PORT = process.env.PORT || 3000;
 
 // middlewares
 app.use(express.json())
+app.use(cors({ origin: 'http://localhost:5173' })) // configured cors setup
 app.use('/todos', todoRoutes)
 
 // sample test route for home
