@@ -2,7 +2,7 @@ import { todoSchema } from "../validators/todoValidator.js";
 
 export default function validateTodo(schema) {
     return (req, res, next) => {
-        const result = todoSchema.safeParse(req.body);
+        const result = schema.safeParse(req.body);
 
         if (!result.success) {
             res.status(400).json({
