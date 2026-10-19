@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { addTodo } from '../services/todoService.js';
 
-const TodoForm = () => {
+const TodoForm = ({ handleTodoAdded }) => {
 
     const [task, setTask] = useState('');
 
     function handleTask(value) {
-        setTask(value)
+        setTask(value);
     }
 
     async function handleSubmit(e) {
@@ -14,12 +14,13 @@ const TodoForm = () => {
         if (!task.trim()) {
             return;
         }
-        try{
-            await addTodo(task);
-            setTask("")
+        try {
+            const response = await addTodo(task);
+            handleTodoAdded(response.data.todo);
+            setTask("");
         } catch (err) {
             console.error(err);
-        }    
+        }
     }
 
     return (
