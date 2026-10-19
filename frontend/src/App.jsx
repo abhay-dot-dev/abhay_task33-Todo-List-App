@@ -31,12 +31,22 @@ function App() {
 
   return (
     <>
+
+      <h1 className="mt-12 mb-6 flex items-center justify-center gap-3 text-4xl font-bold text-gray-800">
+        Plan It. Do It. Done ✨ 
+      </h1>
       <TodoForm />
-      {
-        todos.map((todo) => (
-          <TodoItem key={todo._id} todo={todo} handleTodoUpdate={handleTodoUpdate} />
-        ))
-      }
+
+      <div className='w-full max-w-xl mx-auto mt-4 space-y-2 shadow-md rounded-lg'>
+        {
+          todos.map((todo) => (
+            <TodoItem
+              key={todo._id}
+              todo={todo}
+              handleTodoUpdate={handleTodoUpdate} />
+          ))
+        }
+      </div>
     </>
   )
 }
