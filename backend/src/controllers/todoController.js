@@ -10,7 +10,7 @@ export async function addTodo(req, res) {
 
         // waiting for the task to get saved in DB
         await todo.save();
-        res.status(201).json({ message: "Task added successfully" })
+        res.status(201).json({ message: "Task added successfully", todo })
     } catch (err) {
         res.status(500).json({ message: err.message })
     }
