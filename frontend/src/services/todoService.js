@@ -8,21 +8,26 @@ export const addTodo = (task) => {
     return api.post('/', {
         description: task,
         completed: false
-    })
+    });
 }
 
 export const getTodos = () => {
-    return api.get('/')
+    return api.get('/');
 }
 
 export const updateTodo = (id, completed) => {
     return api.patch(`/${id}`, {
         completed: completed
-    })
+    });
 }
 
 export const deleteTodo = (id) =>{
-    return api.delete(`/${id}`)
+    return api.delete(`/${id}`);
 }
 
+export const editTodo = (id, description) =>{
+    return api.patch(`/${id}`, {
+        description: description
+    });
+}
 export default api;
