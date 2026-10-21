@@ -33,7 +33,7 @@ const TodoItem = ({ todo, handleTodoUpdate, handleTodoDelete, handleSave }) => {
             } else {
                 setError('');
             }
-            await handleSave(id, description);
+            await handleSave(id, description.trim());
             setIsEdited(false);
         } catch (err) {
             console.error("Something went wrong", err)
@@ -44,6 +44,7 @@ const TodoItem = ({ todo, handleTodoUpdate, handleTodoDelete, handleSave }) => {
         function handleClickOutside(e) {
             if (editRef.current && !editRef.current.contains(e.target)) {
                 setIsEdited(false);
+                setError('')
                 setDescription(todo.description);
             }
         }
@@ -108,7 +109,16 @@ const TodoItem = ({ todo, handleTodoUpdate, handleTodoDelete, handleSave }) => {
 
             <button
                 className='ml-auto rounded p-1 text-gray-500 hover:bg-gray-100 cursor-pointer'
-                onClick={(e) => { setIsEdited(isEdited ? false : true) }}
+                onClick={(e) => {
+                    if (isEdited) {
+                        setIsEdited(false);
+                        setError('');
+                        setDescription(todo.description);
+                    } else {
+                        setIsEdited(true);
+                        setError('');
+                    }
+                }}
             > <SquarePen size={18} />
             </button>
 
