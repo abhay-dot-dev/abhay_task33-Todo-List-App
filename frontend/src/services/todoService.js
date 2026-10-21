@@ -21,5 +21,8 @@ export const updateTodo = (id, completed) => {
     })
 }
 
+export const deleteTodo = (id) =>{
+    return api.delete(`/${id}`)
+}
 
 export default api;
