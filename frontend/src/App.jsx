@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 import TodoForm from './components/TodoForm'
 import TodoItem from './components/TodoItem'
-import { deleteTodo, getTodos } from './services/todoService'
+import { deleteTodo, editTodo, getTodos } from './services/todoService'
 
 
 function App() {
@@ -43,6 +43,22 @@ function App() {
     }
   }
 
+  async function handleSave(id, description) {
+    try {
+      await editTodo(id, description);
+      setTodos((prevTodo) =>
+        prevTodo.map((todo) =>
+          todo._id === id ?
+            { ...todo, description: description } :
+            todo
+        )
+      );
+    } catch (err) {
+      console.error("Failed to update todo", err);
+      throw err;
+    }
+  }
+
   return (
     <>
       <h1 className="mt-12 mb-6 flex items-center justify-center gap-3 text-4xl font-bold text-gray-800">
@@ -59,6 +75,7 @@ function App() {
               todo={todo}
               handleTodoUpdate={handleTodoUpdate}
               handleTodoDelete={handleTodoDelete}
+              handleSave={handleSave}
             />
           ))
         }
