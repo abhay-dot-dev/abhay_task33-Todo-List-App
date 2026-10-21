@@ -36,7 +36,7 @@ const TodoItem = ({ todo, handleTodoUpdate, handleTodoDelete, handleSave }) => {
             await handleSave(id, description.trim());
             setIsEdited(false);
         } catch (err) {
-            console.error("Something went wrong", err)
+            console.error("Something went wrong", err);
         }
     }
 
@@ -44,7 +44,7 @@ const TodoItem = ({ todo, handleTodoUpdate, handleTodoDelete, handleSave }) => {
         function handleClickOutside(e) {
             if (editRef.current && !editRef.current.contains(e.target)) {
                 setIsEdited(false);
-                setError('')
+                setError('');
                 setDescription(todo.description);
             }
         }
