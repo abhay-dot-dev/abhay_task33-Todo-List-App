@@ -5,6 +5,7 @@ import { updateTodo } from '../services/todoService'
 const TodoItem = ({ todo, handleTodoUpdate, handleTodoDelete, handleSave }) => {
 
     const editRef = useRef(null);
+    const [error, setError] = useState('');
     const [isEdited, setIsEdited] = useState(false);
     const [description, setDescription] = useState(todo.description);
 
@@ -26,6 +27,12 @@ const TodoItem = ({ todo, handleTodoUpdate, handleTodoDelete, handleSave }) => {
 
     async function handleEditSubmit(id, description) {
         try {
+            if (!description.trim()) {
+                setError("Description cannot be empty!")
+                return;
+            } else {
+                setError('');
+            }
             await handleSave(id, description);
             setIsEdited(false);
         } catch (err) {
@@ -65,25 +72,36 @@ const TodoItem = ({ todo, handleTodoUpdate, handleTodoDelete, handleSave }) => {
                 {
                     isEdited ?
                         <div
-                            className="flex min-w-0 flex-1 items-center gap-2"
+                            className="flex min-w-0 flex-1 flex-col gap-1"
                             ref={editRef}
                         >
-                            <input
-                                className="min-w-0 flex-1 rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-700 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-                                onChange={(e) => {
-                                    setDescription(e.target.value);
-                                }}
-                                type="text"
-                                value={description}
-                                placeholder='Enter a new description' />
-                            <button
-                                className="rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 cursor-pointer"
-                                onClick={() => {
-                                    handleEditSubmit(todo._id, description);
-                                }}
-                                type='button'>
-                                Save
-                            </button>
+                            <div className="flex min-w-0 items-center gap-2">
+                                <input
+                                    className="min-w-0 flex-1 rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-700 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                                    onChange={(e) => {
+                                        setDescription(e.target.value);
+                                        if (e.target.value.trim()) {
+                                            setError('');
+                                        }
+                                    }}
+                                    type="text"
+                                    value={description}
+                                    placeholder='Enter a new description' />
+                                <button
+                                    className="rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 cursor-pointer"
+                                    onClick={() => {
+                                        handleEditSubmit(todo._id, description);
+                                    }}
+                                    type='button'>
+                                    Save
+                                </button>
+                            </div>
+
+                            {error && (
+                                <p className="text-xs text-red-500">
+                                    {error}
+                                </p>
+                            )}
                         </div> : todo.description
                 }
             </li>
