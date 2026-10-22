@@ -25,46 +25,6 @@ export async function getTodo(req, res) {
     }
 }
 
-export async function getTodoById(req, res) {
-    const { id } = req.params;
-
-    try {
-        const todo = await Todo.findById(id);
-        if (!todo) {
-            res.status(404).json({ message: "The requestd todo was not found" });
-            return;
-        }
-
-        res.status(200).json({ todo: todo });
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-}
-
-export async function updateTodoById(req, res) {
-    const { id } = req.params;
-    const { description, completed } = req.body;
-
-    try {
-        if (description === undefined || completed === undefined) {
-            res.status(400).json({ message: "Both description and completed are required" });
-            return;
-        }
-        const todo = await Todo.findByIdAndUpdate(
-            id,
-            { description, completed },
-            { returnDocument: "after", runValidators: true });
-
-        if (!todo) {
-            res.status(404).json({ message: "Todo not found" });
-            return;
-        }
-        res.status(200).json({ todo: todo });
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-}
-
 export async function deleteTodoById(req, res) {
     const { id } = req.params;
 
