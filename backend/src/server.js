@@ -1,5 +1,5 @@
-import dotenv from 'dotenv'
 import cors from 'cors'
+import dotenv from 'dotenv'
 import express from 'express'
 import { connectDB } from './config/db.js';
 import todoRoutes from './routes/todoRoutes.js'
@@ -17,14 +17,14 @@ app.use('/todos', todoRoutes)
 
 // sample test route for home
 app.get('/', (req, res) => {
-    res.send("hello");
+    res.send("Todo API is running successfully!");
 })
 
-// establishing connection an d setting up the server
+// establishing connection and setting up the server
 try {
     await connectDB();
 
-    app.listen(PORT, () => {
+    app.listen(PORT, '0.0.0.0', () => {
         console.log(`Server is up and running at http://localhost:${PORT}`);
     })
 } catch (err) {
