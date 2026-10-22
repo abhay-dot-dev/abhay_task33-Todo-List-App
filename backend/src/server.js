@@ -12,7 +12,15 @@ const PORT = process.env.PORT || 3000;
 
 // middlewares
 app.use(express.json())
-app.use(cors({ origin: 'http://localhost:5173' })) // configured cors setup
+
+// configured cors setup
+app.use(cors({
+    origin: [
+        'http://localhost:5173',
+        'https://todo-list-app-two-beige.vercel.app'
+    ]
+})); 
+
 app.use('/todos', todoRoutes)
 
 // sample test route for home
